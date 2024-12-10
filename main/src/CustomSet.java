@@ -7,35 +7,48 @@ import java.util.Set;
  * Supports initial capacity of 15 and expands by 30% when full.
  */
 public class CustomSet<T> implements Set<T> {
-    private Object[] elements; // Array to store elements
-    private int size;          // Current number of elements
+    private T[] elements; // Generic array to store elements
+    private int size;     // Current number of elements
 
     private static final int INITIAL_CAPACITY = 15;
     private static final double EXPANSION_FACTOR = 1.3;
 
-    // Default constructor
+    /**
+     * Default constructor for creating an empty CustomSet.
+     */
+    @SuppressWarnings("unchecked")
     public CustomSet() {
-        elements = new Object[INITIAL_CAPACITY];
+        elements = (T[]) new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
-    // Constructor with a single element
+    /**
+     * Constructor with a single element.
+     * @param element the initial element to add to the set.
+     */
     public CustomSet(T element) {
         this();
         add(element);
     }
 
-    // Constructor with a collection of elements
+    /**
+     * Constructor with a collection of elements.
+     * @param collection the collection to initialize the set with.
+     */
     public CustomSet(Collection<? extends T> collection) {
         this();
         addAll(collection);
     }
 
-    // Ensure the array has enough capacity
+    /**
+     * Ensure the array has enough capacity.
+     * Expands by 30% if full.
+     */
+    @SuppressWarnings("unchecked")
     private void ensureCapacity() {
         if (size >= elements.length) {
             int newCapacity = (int) (elements.length * EXPANSION_FACTOR);
-            Object[] newArray = new Object[newCapacity];
+            T[] newArray = (T[]) new Object[newCapacity];
             System.arraycopy(elements, 0, newArray, 0, elements.length);
             elements = newArray;
         }
@@ -91,7 +104,7 @@ public class CustomSet<T> implements Set<T> {
 
             @Override
             public T next() {
-                return (T) elements[currentIndex++];
+                return elements[currentIndex++];
             }
         };
     }
@@ -162,6 +175,7 @@ public class CustomSet<T> implements Set<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <U> U[] toArray(U[] a) {
         if (a.length < size) {
             return (U[]) java.util.Arrays.copyOf(elements, size, a.getClass());
