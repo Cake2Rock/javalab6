@@ -1,4 +1,3 @@
-package main.src;
 /**
  * Main class for testing the airline functionality.
  */
